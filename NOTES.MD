@@ -28,3 +28,9 @@
 
 Par :
 >   PS1="$PS1"'`pwd`'   	       # Dossier courant réel !
+
+#### Matériels
+- Graphisme : 
+    - https://opengameart.org/content/breakout-brick-breaker-tile-set-free
+    - https://opengameart.org/content/breakout-set
+
