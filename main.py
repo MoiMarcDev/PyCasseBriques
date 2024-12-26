@@ -1,5 +1,7 @@
 import pygame
 
+from Niveau import Niveau
+
 pygame.init()
 
 pygame.display.set_caption("pyCasseBriques")
