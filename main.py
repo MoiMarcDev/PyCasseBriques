@@ -26,7 +26,7 @@ img_balle = pygame.image.load("img/balle.png").convert_alpha()
 ecran.blit(img_balle, (300, 720))
 
 y_brique, nb_brique = (450, 12)
-briques = ["marron", "bleu", "orange", "vert", "bleu_fonce", "gris", "violet", "jaune", "bleu", "rouge", "vert_clair", "marron"]
+briques = ["bleu_fonce", "gris_fonce", "marron_fonce", "vert_fonce", "orange", "violet", "jaune", "rouge", "bleu_clair", "gris_clair", "marron_clair", "vert_clair"]
 for b in briques:
     img_brique = pygame.image.load("img/brique_" + b + ".png").convert_alpha()
     for x in range(nb_brique):

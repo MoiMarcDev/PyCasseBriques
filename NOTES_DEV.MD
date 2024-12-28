@@ -2,7 +2,7 @@
 On travaillera au niveau du pixel, notamment pour gérer les collisions.
 
 Toutefois, à un niveau plus "macro" on représentera chaque niveau de jeu sous la forme d'une grille :
-- La surface de jeu a une dimension de 840 x 810 pixels
+- La surface de jeu a une dimension de 840 x 810 pixels (largeur x hauteur)
 - Chaque case a une dimension de 30x30 pixles
 - La grille a une largeur de 28 "cases" et une hauteur de 27 "cases" (soit 756 cases au total)
 
