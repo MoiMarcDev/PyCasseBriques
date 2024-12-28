@@ -1,14 +1,13 @@
 """
 Niveau (plateau de jeu)
 """
-import os
 import AppConfig
 
 import pygame
 
 from Grille import Grille, GrilleItem
 
-class NiveauPlateau:
+class AireDeJeu:
     def __init__(self, ecran:pygame.surface.Surface, nom_fichier:str):
         self._ecran = ecran
         self._nom_fichier:str = nom_fichier

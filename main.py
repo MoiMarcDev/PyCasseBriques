@@ -2,8 +2,7 @@ import os
 import pygame
 
 import AppConfig
-from Grille import Grille
-from NiveauPlateau import NiveauPlateau
+from AireDeJeu import AireDeJeu
 
 pygame.init()
 
@@ -16,7 +15,7 @@ img_fond = pygame.image.load("img/fond.png").convert_alpha()
 ecran.blit(img_fond, (0, 0))
 
 # Charger un niveau (une grille de test)
-np = NiveauPlateau(ecran, os.path.join(AppConfig.dossier_csv, "grille_plateau_test.csv"))
+np = AireDeJeu(ecran, os.path.join(AppConfig.dossier_csv, "grille_plateau_test.csv"))
 np.display()
 
 # C'est parti ! (à ce stade, beaucoup reste à faire ;-))

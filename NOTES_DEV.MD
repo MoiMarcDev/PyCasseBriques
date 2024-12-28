@@ -1,5 +1,9 @@
-### Pixels, Niveau & Grille, fichier CSV
-On travaillera au niveau du pixel, notamment pour gérer les collisions.
+### Zones, Pixels, Grille, fichier CSV
+On divise la surface de l'application en deux zones:
+- à gauche, l'aire de jeu (en gros, le mur à casser avec ses briques, la raquette, et la balle)
+- à droite, le tableau d'affichage (niveau, score, temps restant, nombre de balles, nombre de raquettes)
+
+Pour chaque zone, on travaillera au niveau du pixel, notamment pour gérer les collisions dans l'aire de jeu.
 
 Toutefois, à un niveau plus "macro" on représentera chaque niveau de jeu sous la forme d'une grille :
 - La surface de jeu a une dimension de 840 x 810 pixels (largeur x hauteur)
