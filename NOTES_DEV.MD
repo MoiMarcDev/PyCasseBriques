@@ -1,26 +1,29 @@
-### Niveau, Grille et fichier CSV
-Caractéristiques :
-- On représente un *niveau* (ou plateau) de jeu par une *grille* dans laquelle les éléments du décor sont positionnés.
-- Typiquement, un élément == murs, briques
+### Pixels, Niveau & Grille, fichier CSV
+On travaillera au niveau du pixel, notamment pour gérer les collisions.
+
+Toutefois, à un niveau plus "macro" on représentera chaque niveau de jeu sous la forme d'une grille :
+- La surface de jeu a une dimension de 840 x 810 pixels
+- Chaque case a une dimension de 30x30 pixles
 - La grille a une largeur de 28 "cases" et une hauteur de 27 "cases" (soit 756 cases au total)
-- Chaque élément possède une dimension (=nombre de cases) pour sa largeur et pour sa hauteur
-- Typiquement, un mur a une dimension de 1x1, une brique une dimension de 2x1 ; en fait la hauteur est toujours de 1; seule la largeur peut varier
+
+Dans cette grille, on positionne les éléments qui forment le "décor" de chaque niveau :
+- Un élément == un mur ou une brique
+- Chaque élément possède une dimension (=nombre de cases) pour sa largeur et pour sa hauteur (largeur x hauteur)
+- Un mur a une dimension de (1x1), une brique une dimension de (2x1) ; en fait la hauteur est toujours de 1; seule la largeur peut varier
 - Chaque élément occupe  une zone rectangulaire (ou carré) et possède des coordonnées qui correspondent à la localisation, dans la grille, du coin haut et gauche de l'élément
 - Chaque élément a une dureté qui vaut 0 à 3 ; typiquement :
     - 0 : incassable (ex: mur)
-    - 1 : casse au premier contact avec la balle (ex: brique)
-    - 2 : résiste à un premier impact, et casse au second impact avec la balle
+    - 1 : se brise au premier contact avec la balle (ex: brique)
+    - 2 : résiste à un premier impact, et se brise au second impact avec la balle
     - 3 : nécessite 3 impacts avant de casser
-- Chaque case a une dimension de 30x30 pixles
-- La surface de jeu a donc une dimension de 840 x 810 pixels
 
 Dans le sous-dossier "csv/", on stockera :
-- un fichier "element.csv" avec les informations sur les différents éléments qui peuvent etre positionées sur une grille
+- un fichier "element.csv" avec les informations sur les différents éléments qui peuvent etre positionés sur une grille
 - des fichiers "grille_niveau_x.csv" où x représente le numéro du niveau (du plateau) avec les différents éléments et leurs positions
 
 La structure de "element.csv" est :
 
-| Element             | Durété | Largeur | Image                   | Image_impact_1            | Image_impact_2            |
+| Identifiant         | Durete | Largeur | Image                   | Image_impact_1            | Image_impact_2            |
 |---------------------|--------|---------|-------------------------|---------------------------|---------------------------|
 | MUR                 | 0      | 1       | mur.png                 |                           |                           |
 | BRIQUE_BLEU_FONCE   | 3      | 2       | brique_bleu_fonce.png   | brique_bleu_fonce_1.png   | brique_bleu_fonce_2.png   |
@@ -34,7 +37,7 @@ La structure de "element.csv" est :
 | BRIQUE_JAUNE        | 1      | 2       | brique_jaune.png        |                           |                           |
 | BRIQUE_VERT         | 1      | 2       | brique_vert.png         |                           |                           |
 
-Ci-dessous la structure de chaque fichier "grille_niveau_x.csv", avec un exemple d'un possible contenu :
+Ci-dessous la structure de d'un fichier "grille_niveau_x.csv", avec un exemple d'un possible contenu :
 
 |  X |  Y | Element             |
 |----|----|---------------------|
