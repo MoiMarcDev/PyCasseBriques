@@ -30,6 +30,9 @@ La structure de "element.csv" est :
 | Identifiant         | Durete | Largeur | Image                   | Image_impact_1            | Image_impact_2            |
 |---------------------|--------|---------|-------------------------|---------------------------|---------------------------|
 | MUR                 | 0      | 1       | mur.png                 |                           |                           |
+| RAQUETTE_GRANDE     | 0      | 6       | raquette_grande.png     |                           |                           |
+| RAQUETTE            | 0      | 4       | raquette.png            |                           |                           |
+| RAQUETTE_PETITE     | 0      | 2       | raquette_petite.png     |                           |                           |
 | BRIQUE_BLEU_FONCE   | 3      | 2       | brique_bleu_fonce.png   | brique_bleu_fonce_1.png   | brique_bleu_fonce_2.png   |
 | BRIQUE_GRIS_FONCE   | 3      | 2       | brique_gris_fonce.png   | brique_gris_fonce_1.png   | brique_gris_fonce_2.png   |
 | BRIQUE_MARRON_FONCE | 3      | 2       | brique_marron_fonce.png | brique_marron_fonce_1.png | brique_marron_fonce_2.png |
