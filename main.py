@@ -11,15 +11,16 @@ pygame.display.set_caption("pyCasseBriques")
 ecran = pygame.display.set_mode((1100, 810))
 
 # Charger un niveau (une grille de test)
-jeu = AireDeJeu(ecran, os.path.join(AppConfig.nom_dossier_csv, "grille_plateau_vide.csv"))
-jeu.afficher()
+aire_de_jeu = AireDeJeu(ecran, os.path.join(AppConfig.nom_dossier_csv, "grille_plateau_vide.csv"))
+aire_de_jeu.afficher()
 
-continuer = True
+continuer, balle_lancee = True, False
 
-raquette_gauche, raquette_droite = False, False
+evenement, raquette_gauche, raquette_droite = False, False, False
 
 while continuer:
     for e in pygame.event.get():
+        evenement = True
         # Quitter le jeu
         if e.type == pygame.QUIT or (e.type == pygame.KEYUP and e.key == pygame.K_ESCAPE):
             continuer = False
@@ -30,12 +31,9 @@ while continuer:
         if e.type == pygame.KEYDOWN and e.key == pygame.K_RIGHT: raquette_droite = True
         if e.type == pygame.KEYUP and e.key == pygame.K_RIGHT: raquette_droite = False
 
-    if raquette_gauche: jeu.deplacer_raquette(-1)
-    if raquette_droite: jeu.deplacer_raquette(+1)
+    if raquette_gauche: aire_de_jeu.deplacer_raquette(-1, balle_lancee)
+    if raquette_droite: aire_de_jeu.deplacer_raquette(+1, balle_lancee)
 
-    # Mettre à jour toute la surface d'affichage pour refléter les modifications apportées à l'écran
-    pygame.display.flip()
-    
     pygame.time.delay(1)
     
 pygame.quit()

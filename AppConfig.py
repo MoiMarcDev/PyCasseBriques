@@ -13,3 +13,4 @@ _nom_fichier_csv_element = os.path.join(nom_dossier_csv, "element.csv")
 elements:ElementList = ElementList(_nom_fichier_csv_element)
 
 surface_image_fond = pygame.image.load(os.path.join(nom_dossier_img, "fond.png"))
+surface_balle = pygame.image.load(os.path.join(nom_dossier_img, "balle.png"))
