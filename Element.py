@@ -16,15 +16,16 @@ class ElementItem:
         self._dict_data = dict_data
         self.identifiant:str = dict_data["Identifiant"]
         self.durete:int = int(dict_data["Durete"])
-        self.largeur:int = int(dict_data["Largeur"])
         self.images:list[str] = ( dict_data["Image"], dict_data["Image_impact_1"], dict_data["Image_impact_2"] )
         self.surfaces:list[pygame.surface.Surface] = [
             pygame.image.load( os.path.join( AppConfig.dossier_img, x ) ) for x in self.images if x is not None and x.strip() != ""
         ]
+        self.largeur:int = self.surfaces[0].get_width()
+        self.hauteur:int = self.surfaces[0].get_height()
         #.convert_alpha()
         
     def __repr__(self)->str:
-        return f"{type(self)} → identifiant={self.identifiant}; durete={self.durete}; largeur={self.largeur}; images={self.images}; surfaces={id(self.surfaces)}"
+        return f"{type(self)} → identifiant={self.identifiant}; durete={self.durete}; largeur={self.largeur}; hauteur={self.hauteur}; images={self.images}; surfaces={id(self.surfaces)}"
         
 class ElementList:
     def __init__(self, nom_fichier_csv:str):

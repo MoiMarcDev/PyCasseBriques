@@ -16,7 +16,7 @@ ecran.blit(img_fond, (0, 0))
 
 # Charger un niveau (une grille de test)
 jeu = AireDeJeu(ecran, os.path.join(AppConfig.dossier_csv, "grille_plateau_vide.csv"))
-jeu.display()
+jeu.afficher()
 
 # C'est parti ! (à ce stade, beaucoup reste à faire ;-))
 #img_balle = pygame.image.load("img/balle.png").convert_alpha()
@@ -44,6 +44,6 @@ while running:
     # Mettre à jour toute la surface d'affichage pour refléter les modifications apportées à l'écran
     pygame.display.flip()
     
-    pygame.time.delay(2)
+    pygame.time.delay(1)
     
 pygame.quit()
