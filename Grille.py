@@ -40,7 +40,6 @@ class Grille:
 if __name__ == "__main__":
     import os
     import AppConfig
-    g = Grille( os.path.join(AppConfig.dossier_csv, "grille_plateau_test.csv") )
+    g = Grille( os.path.join(AppConfig.nom_dossier_csv, "grille_plateau_test.csv") )
     for e in g:
         print(e)
-

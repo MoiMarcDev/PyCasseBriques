@@ -1,12 +1,15 @@
 """ Constantes / paramètres / variables à utiliser "globalement" """
 import os
 
+import pygame
+
 from Element import ElementList
 
-dossier_racine:str = os.path.dirname(__file__)
-dossier_niveau:str = os.path.join(dossier_racine, "niveau")
-dossier_img:str = os.path.join(dossier_racine, "img")
-dossier_csv:str = os.path.join(dossier_racine, "csv")
+nom_dossier_racine:str = os.path.dirname(__file__)
+nom_dossier_img:str = os.path.join(nom_dossier_racine, "img")
+nom_dossier_csv:str = os.path.join(nom_dossier_racine, "csv")
 
-_fichier_csv_element = os.path.join(dossier_csv, "element.csv")
-elements:ElementList = ElementList(_fichier_csv_element)
+_nom_fichier_csv_element = os.path.join(nom_dossier_csv, "element.csv")
+elements:ElementList = ElementList(_nom_fichier_csv_element)
+
+surface_image_fond = pygame.image.load(os.path.join(nom_dossier_img, "fond.png"))

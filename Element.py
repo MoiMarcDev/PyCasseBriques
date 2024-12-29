@@ -18,7 +18,7 @@ class ElementItem:
         self.durete:int = int(dict_data["Durete"])
         self.images:list[str] = ( dict_data["Image"], dict_data["Image_impact_1"], dict_data["Image_impact_2"] )
         self.surfaces:list[pygame.surface.Surface] = [
-            pygame.image.load( os.path.join( AppConfig.dossier_img, x ) ) for x in self.images if x is not None and x.strip() != ""
+            pygame.image.load( os.path.join( AppConfig.nom_dossier_img, x ) ) for x in self.images if x is not None and x.strip() != ""
         ]
         self.largeur:int = self.surfaces[0].get_width()
         self.hauteur:int = self.surfaces[0].get_height()
@@ -80,7 +80,7 @@ class ElementList:
 
 if __name__ == "__main__":
     import AppConfig
-    el = ElementList(AppConfig._fichier_csv_element)
+    el = ElementList(AppConfig._nom_fichier_csv_element)
     for e in el:
         print(e)
     print("-"*10, el.get_element("BRIQUE_ROUGE"))
