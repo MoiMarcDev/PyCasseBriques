@@ -8,7 +8,7 @@ pygame.init()
 
 # Fenêtre de l'application
 pygame.display.set_caption("pyCasseBriques")
-ecran = pygame.display.set_mode((1100, 810))
+ecran = pygame.display.set_mode((1100, 810), pygame.DOUBLEBUF) # pygame.SCALED)
 
 # Charger un niveau (une grille de test)
 aire_de_jeu = AireDeJeu(ecran, os.path.join(AppConfig.nom_dossier_csv, "grille_plateau_vide.csv"))
@@ -30,9 +30,13 @@ while continuer:
         # Déplacer la raquette vers la droite
         if e.type == pygame.KEYDOWN and e.key == pygame.K_RIGHT: raquette_droite = True
         if e.type == pygame.KEYUP and e.key == pygame.K_RIGHT: raquette_droite = False
+        # Barre d'espace
+        if e.type == pygame.KEYDOWN and e.key == pygame.K_SPACE and not balle_lancee:
+            balle_lancee = True
 
     if raquette_gauche: aire_de_jeu.deplacer_raquette(-1, balle_lancee)
     if raquette_droite: aire_de_jeu.deplacer_raquette(+1, balle_lancee)
+    if balle_lancee: aire_de_jeu.deplacer_balle()
 
     pygame.time.delay(1)
     
