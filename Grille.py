@@ -1,5 +1,7 @@
 import csv
 
+import pygame
+
 import AppConfig
 from Element import ElementItem
 
@@ -10,6 +12,8 @@ class GrilleItem:
         self.x:int = x
         self.y:int = y
         self.element:ElementItem = elt
+        self.rect:pygame.Rect = pygame.Rect(x, y, elt.largeur, elt.hauteur)
+        self.kia:bool = False
         
     def __repr__(self):
         return f"{type(self)} → x={self.x}; y={self.y}; elt={self.element}"

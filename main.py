@@ -7,11 +7,11 @@ from AireDeJeu import AireDeJeu
 pygame.init()
 
 # Fenêtre de l'application
-pygame.display.set_caption("pyCasseBriques")
-ecran = pygame.display.set_mode((1100, 810), pygame.DOUBLEBUF) # pygame.SCALED)
+pygame.display.set_caption(AppConfig.fenetre_titre)
+ecran = pygame.display.set_mode(AppConfig.fenetre_dimension, pygame.DOUBLEBUF)
 
 # Charger un niveau (une grille de test)
-aire_de_jeu = AireDeJeu(ecran, os.path.join(AppConfig.nom_dossier_csv, "grille_plateau_vide.csv"))
+aire_de_jeu = AireDeJeu(ecran, os.path.join(AppConfig.nom_dossier_csv, "grille_plateau_test.csv"))
 aire_de_jeu.afficher()
 
 continuer, balle_lancee = True, False
@@ -38,6 +38,6 @@ while continuer:
     if raquette_droite: aire_de_jeu.deplacer_raquette(+1, balle_lancee)
     if balle_lancee: aire_de_jeu.deplacer_balle()
 
-    pygame.time.delay(1)
+    pygame.time.delay(AppConfig.jeu_delai_pause_ms)
     
 pygame.quit()

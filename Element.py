@@ -22,7 +22,6 @@ class ElementItem:
         ]
         self.largeur:int = self.surfaces[0].get_width()
         self.hauteur:int = self.surfaces[0].get_height()
-        #.convert_alpha()
         
     def __repr__(self)->str:
         return f"{type(self)} → identifiant={self.identifiant}; durete={self.durete}; largeur={self.largeur}; hauteur={self.hauteur}; images={self.images}; surfaces={id(self.surfaces)}"
