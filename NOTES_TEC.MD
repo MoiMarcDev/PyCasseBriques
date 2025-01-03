@@ -29,8 +29,24 @@
 Par :
 >   PS1="$PS1"'`pwd`'   	       # Dossier courant réel !
 
+### playsound
+- /!\ petite difficulté à l'installation de la librairie playsound:
+    - était ko (=produisait une erreur): 
+	    > pip install playsound
+		> python -m pip install playsound
+		- *erreur* : "subprocess-exited-with-error × Getting requirements to build wheel did not run successfully"
+		- erreur toujours présente après :
+		>"pip install --upgrade wheel"
+    - *Ok* en installant directement depuis le repository git 
+	> pip install git+https://github.com/taconi/playsound.git
+	- finalement, utilisation de pygame.mixer.Sound en standard avec pygame ;-)
+
 #### Matériels
 - Graphisme : 
     - https://opengameart.org/content/breakout-brick-breaker-tile-set-free
     - https://opengameart.org/content/breakout-set
-
+	- Images éventuellement retravaillées avec GIMP
+- Sons :
+    - https://mixkit.co/free-sound-effects/game/
+	- https://pixabay.com/sound-effects/ 
+	- Conversion avec VLC

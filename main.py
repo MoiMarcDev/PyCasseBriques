@@ -9,6 +9,8 @@ pygame.init()
 # Fenêtre de l'application
 pygame.display.set_caption(AppConfig.fenetre_titre)
 ecran = pygame.display.set_mode(AppConfig.fenetre_dimension, pygame.DOUBLEBUF)
+# Mixer (sons)
+pygame.mixer.init()
 
 # Charger un niveau (une grille de test)
 aire_de_jeu = AireDeJeu(ecran, os.path.join(AppConfig.nom_dossier_csv, "grille_plateau_test.csv"))

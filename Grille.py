@@ -13,6 +13,7 @@ class GrilleItem:
         self.y:int = y
         self.element:ElementItem = elt
         self.rect:pygame.Rect = pygame.Rect(x, y, elt.largeur, elt.hauteur)
+        self.impact:int = 0
         self.kia:bool = False
         
     def __repr__(self):

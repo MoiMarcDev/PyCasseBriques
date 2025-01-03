@@ -14,14 +14,14 @@ class AireDeJeu:
    
     def __init__(self, ecran:pygame.surface.Surface, nom_fichier_contenu_aire:str):
         """Écran"""
-        self._ecran_surface:pygame.surface.Surface = ecran
+        self._surface_ecran:pygame.surface.Surface = ecran
         """Fond"""
         # Pourrait être rendu paramétrable dans une future version
-        self._fond_surface:pygame.surface.Surface = AppConfig.surface_image_fond 
+        self._surface_fond:pygame.surface.Surface = AppConfig.surface_image_fond 
         """Grille"""
         # Contenu initial de l'aire = éléments = mur et briques
         self._nom_fichier_contenu_aire:str = nom_fichier_contenu_aire
-        self._grille_depart:Grille = Grille( self._nom_fichier_contenu_aire )
+        self._grille:Grille = Grille( self._nom_fichier_contenu_aire )
         """Raquette"""
         self._raquette:ElementItem = AppConfig.elements.get_element("RAQUETTE")
         self._raquette_largeur:int = self._raquette.surfaces[0].get_width()
@@ -90,22 +90,22 @@ class AireDeJeu:
         Chaque élément (mur, brique) est positionné à un emplacement de la grille (coordonées x et y)
         """
         # Fond
-        self._ecran_surface.blit(AppConfig.surface_image_fond, (0, 0))
+        self._surface_ecran.blit(AppConfig.surface_image_fond, (0, 0))
         # Mur
         for x in range(0, AppConfig.surface_image_fond.get_width() // AppConfig.mur_epaisseur):
-            self._ecran_surface.blit(AppConfig.surface_image_mur, (x*AppConfig.mur_epaisseur, 0))
+            self._surface_ecran.blit(AppConfig.surface_image_mur, (x*AppConfig.mur_epaisseur, 0))
         for y in range(0, AppConfig.surface_image_fond.get_height() // AppConfig.mur_epaisseur):
-            self._ecran_surface.blit(AppConfig.surface_image_mur, (0, y*AppConfig.mur_epaisseur))
-            self._ecran_surface.blit(AppConfig.surface_image_mur, (x*AppConfig.mur_epaisseur, y*AppConfig.mur_epaisseur))
+            self._surface_ecran.blit(AppConfig.surface_image_mur, (0, y*AppConfig.mur_epaisseur))
+            self._surface_ecran.blit(AppConfig.surface_image_mur, (x*AppConfig.mur_epaisseur, y*AppConfig.mur_epaisseur))
         # Éléménts du décor (briques à casser)
-        for item in self._grille_depart:
+        for item in self._grille:
             sf = AppConfig.elements.get_surface(item.element.identifiant)
-            self._ecran_surface.blit(sf, (item.x, item.y))
+            self._surface_ecran.blit(sf, (item.x, item.y))
         pygame.display.flip()
         # Raquette
-        self._ecran_surface.blit( self._raquette.surfaces[0], (self._raquette_x, self._raquette_y))
+        self._surface_ecran.blit( self._raquette.surfaces[0], (self._raquette_x, self._raquette_y))
         # Balle
-        self._ecran_surface.blit( self._balle_surface, (self._balle_x, self._balle_y))
+        self._surface_ecran.blit( self._balle_surface, (self._balle_x, self._balle_y))
         # Affichage 
         pygame.display.update()
 
@@ -121,7 +121,7 @@ class AireDeJeu:
             # Remettre le fond
             self._restaurer_fond(self._balle_x, self._balle_y, self._balle_largeur, self._balle_hauteur)
             # Afficher à la nouvelle position
-            self._ecran_surface.blit( self._balle_surface, (int(nouveau_x), int(nouveau_y)))
+            self._surface_ecran.blit( self._balle_surface, (int(nouveau_x), int(nouveau_y)))
             pygame.display.update((int(nouveau_x), int(nouveau_y),self._balle_largeur, self._balle_hauteur))
 
         # Nouvelle position
@@ -149,7 +149,7 @@ class AireDeJeu:
             # Raquette
             contact_face = "top"
         else:
-            for gi in self._grille_depart:
+            for gi in self._grille:
                 if gi.kia: continue # Élément dédruit
                 if not balle_rect.colliderect( gi.rect ): continue # Pas de contact
                 # Contact possible → on teste plus finement, et on détermine la face de contact
@@ -160,10 +160,10 @@ class AireDeJeu:
                 balle_centre_y:int = balle_rect.top + (balle_rect.height // 2)
                 print(f"balle_rayon: {balle_rayon}, balle_centre_x: {balle_centre_x}, balle_centre_y: {balle_centre_y}")
                 faces = {
-                    'left': [(gi.x, y) for y in range(gi.y, gi.y + gi.rect.height)],
-                    'right': [(gi.x + gi.rect.width, y) for y in range(gi.y, gi.y + gi.rect.height)],
+                    'bottom': [(x, gi.y + gi.rect.height) for x in range(gi.x, gi.x + gi.rect.width)],
                     'top': [(x, gi.y) for x in range(gi.x, gi.x + gi.rect.width)],
-                    'bottom': [(x, gi.y + gi.rect.height) for x in range(gi.x, gi.x + gi.rect.width)]
+                    'left': [(gi.x, y) for y in range(gi.y, gi.y + gi.rect.height)],
+                    'right': [(gi.x + gi.rect.width, y) for y in range(gi.y, gi.y + gi.rect.height)]
                 }
                 for face, points in faces.items():
                     for p in points:
@@ -172,9 +172,23 @@ class AireDeJeu:
                         if distance <= balle_rayon:
                             contact_face = face
                             break
-                    if contact_face is not None: break
+                    if contact_face is not None: 
+                        # brique supprimée ou dégradée selon la dureté et le nombre d'impacts
+                        gi.impact += 1
+                        gi.kia = gi.element.durete <= gi.impact
+                        if gi.kia:  # Remettre le fond
+                            self._restaurer_fond(gi.rect.left, gi.rect.top, gi.rect.width, gi.rect.height)
+                            s = pygame.mixer.Sound(AppConfig.nom_fichier_son_destruction)
+                            s.set_volume(0.3)
+                            s.play()
+                        else:       # Nouvelle image brique
+                            self._surface_ecran.blit(gi.element.surfaces[gi.impact], (gi.rect.left, gi.rect.top))
+                        pygame.display.update((gi.rect.left, gi.rect.top, gi.rect.width, gi.rect.height))
+                        break
                     
         if contact_face is None: return
+        pygame.mixer.Sound(AppConfig.nom_fichier_son_contact).play()
+        
         print(f"Contact → {contact_face}")
         print(f"Angle avant → {self._balle_mouvement_angle}")
         # Changement d'angle
@@ -202,7 +216,6 @@ class AireDeJeu:
         self._balle_mouvement_x_y = self._get_mouvement_x_y()
         print(f"self._balle_mouvement_x_y après → {self._balle_mouvement_x_y}")
         print('*' * 10)
-        #AppConfig.jeu_delai_pause_ms = 1000
             
     def deplacer_raquette(self, delta_x:int, balle_lancee:bool):
         """Déplacer la raquette et, éventuellement, la balle si pas encore lancée et donc toujours 'posée' sur la raquette"""
@@ -223,7 +236,7 @@ class AireDeJeu:
         self._restaurer_fond(self._raquette_x, self._raquette_y, self._raquette_largeur, self._raquette_hauteur)
         # Nouvelle position de la raquette et affichage
         self._raquette_x = nouveau_x
-        self._ecran_surface.blit( self._raquette.surfaces[0], (self._raquette_x, self._raquette_y))
+        self._surface_ecran.blit( self._raquette.surfaces[0], (self._raquette_x, self._raquette_y))
         pygame.display.update((self._raquette_x, self._raquette_y,self._raquette_largeur, self._raquette_hauteur))
         
     def _restaurer_fond(self, x:float, y:float, largeur:int, hauteur:int):
@@ -231,6 +244,6 @@ class AireDeJeu:
         x,y = int(x), int(y)
         # Restauration
         rect_arriere_plan = pygame.Rect(x, y, largeur, hauteur)
-        surf_arriere_plan = self._fond_surface.subsurface(rect_arriere_plan)
-        self._ecran_surface.blit(surf_arriere_plan, (x, y))
+        surf_arriere_plan = self._surface_fond.subsurface(rect_arriere_plan)
+        self._surface_ecran.blit(surf_arriere_plan, (x, y))
         pygame.display.update((x, y, largeur, hauteur))
